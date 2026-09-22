@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Happy Birthday Pathu! 🎂✨</title>
+  <meta name="description" content="A magical 5-stage interactive digital birthday card for Pathu with cute animations, surprises, and music!" />
+
+  <!-- Google Fonts: Fredoka, Comic Neue, Quicksand, & Caveat (Romantic Handwriting) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Comic+Neue:wght@400;700&family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Confetti Canvas -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- Floating Mobile-First App Header Controls -->
+  <header class="app-header-bar" id="appHeaderBar">
+    <button id="customizerToggleBtn" class="header-btn customizer-header-btn" title="Add your own images, video & music" aria-label="Customize Card">
+      <span class="btn-icon">✨</span>
+      <span class="btn-label header-label-full">Personalize</span>
+      <span class="btn-label header-label-short">Photos</span>
+    </button>
+
+    <button id="musicToggleBtn" class="header-btn music-header-btn" title="Toggle Birthday Music" aria-label="Toggle Music">
+      <span class="btn-icon">🎵</span>
+      <span class="btn-label" id="musicLabel">Music</span>
+      <div class="music-disc-indicator" id="discIndicator"></div>
+    </button>
+  </header>
+
+  <!-- Audio Element (supports local music file or custom audio) -->
+  <audio id="bgMusic" src="assets/the_mountain-happy-birthday-508020.mp3" loop preload="auto">
+    <source src="assets/the_mountain-happy-birthday-508020.mp3" type="audio/mpeg" />
+    <source src="assets/music.mp3" type="audio/mpeg" />
+    <source src="the_mountain-happy-birthday-508020.mp3" type="audio/mpeg" />
+    <source src="music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- MAIN STAGE CONTAINER -->
+  <main id="appContainer" class="app-container">
+
+    <!-- ==========================================
+         STAGE 1: "Happy Birthday!" + MIFFY STAGE 1 + "next :3"
+         ========================================== -->
+    <section id="stage1" class="card-stage active-stage" data-stage="1">
+      <div class="stage-bg-layer stage1-bg" id="stage1Bg"></div>
+
+      <div class="stage-content-wrapper">
+        <!-- Top Center: Typing Text -->
+        <div class="typing-container top-center">
+          <h1 id="stage1Text" class="comic-text stage-heading typing-text"></h1>
+        </div>
+
+        <!-- Middle Center: MIFFY STAGE 1 -->
+        <div class="media-container middle-center">
+          <div class="image-frame miffy-frame" id="miffy1Wrapper">
+            <img 
+              id="miffy1Img" 
+              class="card-img" 
+              src="assets/MIFFY STAGE 1.png" 
+              alt="Miffy Stage 1" 
+              onerror="this.onerror=null; this.src='assets/miffy_stage_1.png';" 
+            />
+            <!-- Cute SVG Fallback shown if custom image not found -->
+            <div class="svg-fallback" id="miffy1Svg">
+              <svg viewBox="0 0 200 240" class="miffy-illustration" aria-hidden="true">
+                <!-- Cute Miffy Bunny Vector Art -->
+                <circle cx="100" cy="125" r="95" fill="#FFF9F2" stroke="#222" stroke-width="3.5"/>
+                <!-- Ears -->
+                <ellipse cx="68" cy="45" rx="19" ry="42" fill="#FFF9F2" stroke="#222" stroke-width="3.5"/>
+                <ellipse cx="132" cy="45" rx="19" ry="42" fill="#FFF9F2" stroke="#222" stroke-width="3.5"/>
+                <!-- Eyes -->
+                <ellipse cx="78" cy="115" rx="4" ry="5.5" fill="#222"/>
+                <ellipse cx="122" cy="115" rx="4" ry="5.5" fill="#222"/>
+                <!-- X Mouth -->
+                <line x1="94" y1="134" x2="106" y2="146" stroke="#222" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="106" y1="134" x2="94" y2="146" stroke="#222" stroke-width="3.5" stroke-linecap="round"/>
+                <!-- Cheeks -->
+                <ellipse cx="65" cy="130" rx="9" ry="6" fill="#FFB7C5" opacity="0.6"/>
+                <ellipse cx="135" cy="130" rx="9" ry="6" fill="#FFB7C5" opacity="0.6"/>
+                <!-- Party Hat -->
+                <polygon points="100,5 82,45 118,45" fill="#FFD166" stroke="#222" stroke-width="3"/>
+                <circle cx="100" cy="5" r="7" fill="#EF476F" stroke="#222" stroke-width="2"/>
+                <circle cx="95" cy="25" r="3" fill="#06D6A0"/>
+                <circle cx="103" cy="35" r="3" fill="#118AB2"/>
+                <!-- Little Birthday Flower / Bow -->
+                <circle cx="100" cy="190" r="14" fill="#FF85A1" stroke="#222" stroke-width="2.5"/>
+                <circle cx="100" cy="190" r="5" fill="#FFF"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Center: Pill Button "next :3" -->
+        <div class="button-container bottom-center">
+          <button id="stage1NextBtn" class="pill-btn fredoka-btn" aria-label="Go to stage 2">
+            next :3
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         STAGE 2: "i have a suprise for / you, wanna see it" + Yes/No Buttons + miffy stage 2
+         ========================================== -->
+    <section id="stage2" class="card-stage" data-stage="2">
+      <div class="stage-bg-layer stage2-bg" id="stage2Bg"></div>
+
+      <div class="stage-content-wrapper">
+        <!-- Top Center: 2-line Typing Text in Comic Sans BOLD -->
+        <div class="typing-container top-center">
+          <h2 id="stage2Text" class="comic-text comic-bold stage-heading typing-text">
+            <span class="line-1" id="stage2Line1"></span>
+            <br />
+            <span class="line-2" id="stage2Line2"></span>
+          </h2>
+        </div>
+
+        <!-- Middle Center: Two Pill Buttons (yes!! and no thanks.) -->
+        <div class="button-container-dual middle-center">
+          <button id="stage2YesBtn" class="pill-btn fredoka-btn btn-yes" aria-label="Yes button">
+            yes!!
+          </button>
+          <button id="stage2NoBtn" class="pill-btn fredoka-btn btn-no" aria-label="No thanks button">
+            no thanks.
+          </button>
+        </div>
+
+        <!-- Bottom Center: miffy stage 2 GIF -->
+        <div class="media-container bottom-center">
+          <div class="image-frame miffy-gif-frame" id="miffy2Wrapper">
+            <img 
+              id="miffy2Img" 
+              class="card-img" 
+              src="assets/miffy stage 2.gif" 
+              alt="Miffy Stage 2 GIF" 
+              onerror="this.onerror=null; this.src='assets/miffy_stage_2.gif';" 
+            />
+            <!-- Animated Cute Fallback if GIF not provided -->
+            <div class="svg-fallback animated-bounce" id="miffy2Svg">
+              <svg viewBox="0 0 200 230" class="miffy-illustration" aria-hidden="true">
+                <circle cx="100" cy="125" r="85" fill="#FFF9F2" stroke="#222" stroke-width="3.5"/>
+                <!-- Ears with cute wiggle -->
+                <ellipse cx="70" cy="48" rx="18" ry="40" fill="#FFF9F2" stroke="#222" stroke-width="3.5" transform="rotate(-8 70 48)"/>
+                <ellipse cx="130" cy="48" rx="18" ry="40" fill="#FFF9F2" stroke="#222" stroke-width="3.5" transform="rotate(8 130 48)"/>
+                <!-- Wink / Happy Eyes -->
+                <path d="M72,118 Q80,110 88,118" stroke="#222" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                <path d="M112,118 Q120,110 128,118" stroke="#222" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                <!-- Mouth -->
+                <line x1="94" y1="135" x2="106" y2="147" stroke="#222" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="106" y1="135" x2="94" y2="147" stroke="#222" stroke-width="3.5" stroke-linecap="round"/>
+                <!-- Rosy Cheeks -->
+                <circle cx="68" cy="130" r="9" fill="#FF80BF" opacity="0.6"/>
+                <circle cx="132" cy="130" r="9" fill="#FF80BF" opacity="0.6"/>
+                <!-- Heart in hands -->
+                <path d="M100,185 C90,165 65,175 75,195 C85,215 100,225 100,225 C100,225 115,215 125,195 C135,175 110,165 100,185 Z" fill="#FF4D6D" stroke="#222" stroke-width="2.5"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         STAGE 3: Video bg + STAGE 3 BOX + CAKE STAGE 3 button (Centered & Larger)
+         ========================================== -->
+    <section id="stage3" class="card-stage" data-stage="3">
+      <!-- Background Video "cherry vid bg" with infinite loop, no controls -->
+      <div class="video-bg-container" id="stage3VideoBg">
+        <video id="cherryVid3" class="bg-video" autoplay loop muted playsinline>
+          <source src="assets/cherry vid bg.mp4" type="video/mp4" />
+          <source src="assets/cherry_vid_bg.mp4" type="video/mp4" />
+        </video>
+        <!-- Animated Cherry Pattern Fallback if video is missing -->
+        <div class="cherry-pattern-bg" id="cherryFallback3"></div>
+      </div>
+
+      <div class="stage-content-wrapper stage-box-layout">
+        <!-- STAGE 3 BOX: Pretty large, centered with top & bottom breathing room -->
+        <div class="stage-card-box stage3-box" id="stage3BoxWrapper">
+          <img 
+            id="stage3BoxImg" 
+            class="box-custom-bg" 
+            src="assets/STAGE 3 BOX.gif" 
+            alt="Stage 3 Box Frame" 
+            onerror="this.onerror=null; this.src='assets/STAGE_3_BOX.png';" 
+          />
+
+          <!-- Content inside Stage 3 Box -->
+          <div class="box-content-layer">
+            <h3 class="box-title fredoka-font">tap on the cake to open your gift!</h3>
+
+            <!-- Cake Image Button: Enlarged & Raised to Center per correction -->
+            <div class="cake-btn-container">
+              <button id="cakeStage3Btn" class="cake-interactive-btn" title="Tap the birthday cake to open!" aria-label="Tap the cake">
+                <img 
+                  id="cakeStage3Img" 
+                  class="cake-img" 
+                  src="assets/CAKE STAGE 3.png" 
+                  alt="Birthday Cake Button" 
+                  onerror="this.onerror=null; this.src='assets/CAKE_STAGE_3.png';" 
+                />
+                <!-- Cute SVG Birthday Cake Fallback -->
+                <div class="svg-fallback" id="cakeSvg">
+                  <svg viewBox="0 0 160 160" class="cake-illustration" aria-hidden="true">
+                    <!-- Plate -->
+                    <ellipse cx="80" cy="142" rx="68" ry="14" fill="#EAEAEA" stroke="#222" stroke-width="3"/>
+                    <ellipse cx="80" cy="140" rx="62" ry="11" fill="#FFF" stroke="#222" stroke-width="2"/>
+                    <!-- Bottom Layer -->
+                    <rect x="30" y="90" width="100" height="42" rx="10" fill="#FFCCD5" stroke="#222" stroke-width="3.5"/>
+                    <path d="M30,105 Q45,115 60,105 Q75,115 90,105 Q105,115 120,105 Q130,112 130,105" fill="none" stroke="#FF4D6D" stroke-width="4"/>
+                    <!-- Top Layer -->
+                    <rect x="45" y="60" width="70" height="34" rx="8" fill="#FFF0F3" stroke="#222" stroke-width="3.5"/>
+                    <circle cx="55" cy="62" r="5" fill="#FF758F"/>
+                    <circle cx="80" cy="62" r="5" fill="#FF758F"/>
+                    <circle cx="105" cy="62" r="5" fill="#FF758F"/>
+                    <!-- Candles -->
+                    <rect x="58" y="38" width="6" height="22" fill="#A0C4FF" stroke="#222" stroke-width="2"/>
+                    <rect x="77" y="34" width="6" height="26" fill="#FDFFB6" stroke="#222" stroke-width="2"/>
+                    <rect x="96" y="38" width="6" height="22" fill="#BDB2FF" stroke="#222" stroke-width="2"/>
+                    <!-- Candle Flames with Flicker Animation -->
+                    <path class="flame-flicker" d="M61,28 Q66,35 61,38 Q56,35 61,28 Z" fill="#FF9E00"/>
+                    <path class="flame-flicker delay-1" d="M80,24 Q85,31 80,34 Q75,31 80,24 Z" fill="#FFD000"/>
+                    <path class="flame-flicker delay-2" d="M99,28 Q104,35 99,38 Q94,35 99,28 Z" fill="#FF9E00"/>
+                  </svg>
+                </div>
+                <div class="tap-hint">✨ Tap Me! ✨</div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         STAGE 4: Video bg + Confetti + STAGE 4 BOX + JELLYCAT + "my wishes" button
+         ========================================== -->
+    <section id="stage4" class="card-stage" data-stage="4">
+      <!-- Background Video "cherry vid bg" with infinite loop -->
+      <div class="video-bg-container" id="stage4VideoBg">
+        <video id="cherryVid4" class="bg-video" autoplay loop muted playsinline>
+          <source src="assets/cherry vid bg.mp4" type="video/mp4" />
+          <source src="assets/cherry_vid_bg.mp4" type="video/mp4" />
+        </video>
+        <!-- Animated Cherry Fallback -->
+        <div class="cherry-pattern-bg" id="cherryFallback4"></div>
+      </div>
+
+      <div class="stage-content-wrapper stage-box-layout">
+        <!-- STAGE 4 BOX -->
+        <div class="stage-card-box stage4-box" id="stage4BoxWrapper">
+          <img 
+            id="stage4BoxImg" 
+            class="box-custom-bg" 
+            src="assets/STAGE 4 BOX.gif" 
+            alt="Stage 4 Box Frame" 
+            onerror="this.onerror=null; this.src='assets/STAGE_4_BOX.png';" 
+          />
+
+          <!-- Inside Stage 4 Box -->
+          <div class="box-content-layer">
+            <h3 class="box-title fredoka-font">it's a jellycat bunny!! :D</h3>
+
+            <!-- JELLYCAT Image: Centered, raised up per correction, no overlap with button -->
+            <div class="jellycat-container">
+              <div class="image-frame jellycat-frame" id="jellycatWrapper">
+                <img 
+                  id="jellycatImg" 
+                  class="jellycat-img" 
+                  src="assets/JELLYCAT.png" 
+                  alt="Jellycat Bunny" 
+                  onerror="this.onerror=null; this.src='assets/JELLYCAT.jpg';" 
+                />
+                <!-- Cute SVG Jellycat Bunny Fallback -->
+                <div class="svg-fallback" id="jellycatSvg">
+                  <svg viewBox="0 0 180 200" class="jellycat-illustration" aria-hidden="true">
+                    <!-- Long floppy Jellycat ears -->
+                    <ellipse cx="50" cy="55" rx="14" ry="46" fill="#F4EDE4" stroke="#222" stroke-width="3" transform="rotate(-25 50 55)"/>
+                    <ellipse cx="130" cy="55" rx="14" ry="46" fill="#F4EDE4" stroke="#222" stroke-width="3" transform="rotate(25 130 55)"/>
+                    <ellipse cx="50" cy="55" rx="8" ry="36" fill="#FFD8E2" transform="rotate(-25 50 55)"/>
+                    <ellipse cx="130" cy="55" rx="8" ry="36" fill="#FFD8E2" transform="rotate(25 130 55)"/>
+                    <!-- Chubby body -->
+                    <ellipse cx="90" cy="145" rx="55" ry="50" fill="#F4EDE4" stroke="#222" stroke-width="3.5"/>
+                    <ellipse cx="90" cy="148" rx="38" ry="34" fill="#FFFFFF"/>
+                    <!-- Head -->
+                    <circle cx="90" cy="100" r="46" fill="#F4EDE4" stroke="#222" stroke-width="3.5"/>
+                    <!-- Beads eyes -->
+                    <ellipse cx="73" cy="95" rx="4" ry="5" fill="#1A1A1A"/>
+                    <ellipse cx="107" cy="95" rx="4" ry="5" fill="#1A1A1A"/>
+                    <circle cx="72" cy="93" r="1.5" fill="#FFF"/>
+                    <circle cx="106" cy="93" r="1.5" fill="#FFF"/>
+                    <!-- Pink suedette nose -->
+                    <polygon points="90,105 84,101 96,101" fill="#FF8DA1"/>
+                    <path d="M84,110 Q90,115 96,110" stroke="#222" stroke-width="2.5" fill="none"/>
+                    <!-- Little pink bow tie -->
+                    <polygon points="82,130 90,135 82,140" fill="#FF6B8B" stroke="#222" stroke-width="2"/>
+                    <polygon points="98,130 90,135 98,140" fill="#FF6B8B" stroke="#222" stroke-width="2"/>
+                    <circle cx="90" cy="135" r="4" fill="#FFCCD5" stroke="#222" stroke-width="1.5"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pill Button "my wishes": Fredoka BOLD all lowercase, strictly non-overlapping -->
+            <div class="box-bottom-btn-container">
+              <button id="stage4WishesBtn" class="pill-btn fredoka-btn fredoka-bold" aria-label="Go to wishes stage">
+                my wishes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         STAGE 5: dots bg + Illustrated Birthday Letter for Pathu
+         ========================================== -->
+    <section id="stage5" class="card-stage" data-stage="5">
+      <!-- Seamless Dots Background -->
+      <div class="stage-bg-layer stage5-bg" id="stage5Bg"></div>
+
+      <!-- Ambient Floating Sparkles & Floating Hearts Layer -->
+      <div class="letter-ambient-sparkles" aria-hidden="true">
+        <span class="ambient-sparkle s1">✨</span>
+        <span class="ambient-sparkle s2">🌸</span>
+        <span class="ambient-sparkle s3">✦</span>
+        <span class="ambient-sparkle s4">💕</span>
+        <span class="ambient-sparkle s5">✨</span>
+        <span class="ambient-sparkle s6">✧</span>
+      </div>
+
+      <div class="stage-content-wrapper stage-box-layout stage5-wrapper">
+        <!-- THE ILLUSTRATED LETTER CARD -->
+        <div class="stage-card-box stage5-box letter-frame-card" id="stage5BoxWrapper">
+          <!-- The Hand-illustrated Frame Artwork -->
+          <img 
+            id="stage5BoxImg" 
+            class="letter-frame-art" 
+            src="assets/letter-frame.jpg" 
+            alt="Hand-illustrated Birthday Card Frame" 
+            onerror="this.onerror=null; this.src='assets/STAGE_5_BOX.png';" 
+          />
+
+          <!-- Interactive Balloon Floating Touch Zone (Bottom Left) -->
+          <div class="balloon-touch-zone" id="balloonZone" title="Tap the balloons! 🎈">
+            <span class="balloon-gleam"></span>
+            <span class="balloon-hint-icon">🎈</span>
+          </div>
+
+          <!-- Interactive Ribbon Touch Zone (Bottom Right) -->
+          <div class="ribbon-touch-zone" id="ribbonZone" title="Silk ribbon! 🎀">
+            <span class="ribbon-sparkle">💖</span>
+          </div>
+
+          <!-- The Heartfelt Letter Written Inside the Pink Oval Plaque -->
+          <div class="letter-oval-content" id="letterOvalContent">
+            <div class="letter-scroll-wrapper wishes-scroll-area">
+              <div class="letter-inner-flow">
+                <!-- Recipient in Romantic Hand-drawn Script -->
+                <h2 class="letter-recipient wishes-recipient" id="wishesRecipientName">Dearest Pathu,</h2>
+
+                <!-- Heartfelt Birthday Wishes -->
+                <div class="letter-body-message wishes-text" id="wishesMessageBody">
+                  <p class="letter-para para-opening">
+                    Happy Birthday to the sweetest, most wonderful soul! 🌸✨
+                  </p>
+                  <p class="letter-para para-main">
+                    Wishing you a year filled with endless sunshine, giggles, cozy moments, and dreams coming true. 
+                    Thank you for being such a bright light and bringing so much happiness to everyone around you. 
+                    May your special day be as sweet, delightful, and truly amazing as you are! 🎀💖
+                  </p>
+                </div>
+
+                <!-- Romantic Signoff -->
+                <div class="letter-signature wishes-signature" id="wishesSignoff">
+                  <span class="signoff-cheer">Forever cheering for you,</span><br />
+                  <strong class="signoff-love">With lots of love <span class="heart-pulsing">💕</span></strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 5 Interactive Action Buttons (Docked cleanly below the card) -->
+        <div class="stage5-actions stage5-actions-dock">
+          <button id="burstHeartsBtn" class="pill-btn letter-pill-btn action-heart-btn" aria-label="Send love to Pathu">
+            <span class="btn-heart-pulse">💖</span> send love <span class="btn-mini-heart">💕</span>
+          </button>
+          <button id="restartCardBtn" class="pill-btn letter-pill-btn action-restart-btn" aria-label="Replay birthday card">
+            replay card <span class="btn-rotate-icon">🔄</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================
+       MODAL: Customizer & Asset Uploader
+       Allows Pathu's friend to easily upload photos/music & personalize text
+       ========================================== -->
+  <div id="customizerModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>✨ Personalize Pathu's Birthday Website</h3>
+        <button id="closeModalBtn" class="close-btn" aria-label="Close customizer">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-hint">
+          Want to drop in your own photos, GIFs, video, and song? Upload them here or drop files directly into the <code>assets/</code> folder!
+        </p>
+
+        <div class="form-group">
+          <label for="inputFriendName">Friend's Name:</label>
+          <input type="text" id="inputFriendName" value="Pathu" />
+        </div>
+
+        <div class="form-group">
+          <label for="inputWishMessage">Birthday Wishes Message:</label>
+          <textarea id="inputWishMessage" rows="4">Happy Birthday to the sweetest, most wonderful soul! 🌸✨&#10;&#10;Wishing you a year filled with endless sunshine, giggles, cozy moments, and dreams coming true. Thank you for being such a bright light and bringing so much happiness to everyone around you. May your special day be as sweet, delightful, and truly amazing as you are! 🎀💖</textarea>
+        </div>
+
+        <div class="upload-grid">
+          <div class="upload-item">
+            <span class="upload-label">🎵 Background Music (.mp3)</span>
+            <input type="file" id="uploadMusic" accept="audio/*" />
+          </div>
+          <div class="upload-item">
+            <span class="upload-label">🌟 Star Background (Stage 1 & 2)</span>
+            <input type="file" id="uploadStarBg" accept="image/*" />
+          </div>
+          <div class="upload-item">
+            <span class="upload-label">🐰 MIFFY STAGE 1 (Image)</span>
+            <input type="file" id="uploadMiffy1" accept="image/*" />
+          </div>
+          <div class="upload-item">
+            <span class="upload-label">🐰 miffy stage 2 (GIF)</span>
+            <input type="file" id="uploadMiffy2" accept="image/*" />
+          </div>
+          <div class="upload-item">
+            <span class="upload-label">🍒 Cherry Video Bg (Stage 3 & 4)</span>
+            <input type="file" id="uploadCherryVid" accept="video/*" />
+          </div>
+          <div class="upload-item">
+            <span class="upload-label">🎂 CAKE STAGE 3 (Image)</span>
+            <input type="file" id="uploadCake" accept="image/*" />
+          </div>
+          <div class="upload-item">
+            <span class="upload-label">🧸 JELLYCAT (Image)</span>
+            <input type="file" id="uploadJellycat" accept="image/*" />
+          </div>
+          <div class="upload-item">
+            <span class="upload-label">⚪ Dots Background (Stage 5)</span>
+            <input type="file" id="uploadDotsBg" accept="image/*" />
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button id="savePersonalizationBtn" class="pill-btn fredoka-btn save-btn">Save Changes ✨</button>
+          <button id="resetDefaultsBtn" class="pill-btn fredoka-btn reset-btn">Reset to Default</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script src="script.js"></script>
+</body>
+</html>
