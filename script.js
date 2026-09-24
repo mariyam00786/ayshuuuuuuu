@@ -1,6 +1,6 @@
 /* =========================================================
    DIGITAL BIRTHDAY CARD - JAVASCRIPT
-   Interactive 5-Stage Engine for Pathu's Birthday Website
+   Interactive 5-Stage Engine for ayshuuuuuuuuuu's Birthday Website
    ========================================================= */
 
 (function () {
@@ -9,7 +9,10 @@
   // --- Configuration & State ---
   const state = {
     currentStage: 1,
-    friendName: localStorage.getItem('bday_friend_name') || 'Pathu',
+    friendName: (function() {
+      const saved = localStorage.getItem('bday_friend_name');
+      return (!saved || saved.toLowerCase() === 'pathu' || saved.toLowerCase() === 'pathuu') ? 'ayshuuuuuuuuuu' : saved;
+    })(),
     wishMessage: localStorage.getItem('bday_wish_message') || '',
     isMusicPlaying: false,
     audioCtx: null,
@@ -315,7 +318,7 @@
     }
   }
 
-  // --- STAGE 5: Illustrated Letter Frame + Wishes for Pathu ---
+  // --- STAGE 5: Illustrated Letter Frame + Wishes for ayshuuuuuuuuuu ---
   function startStage5() {
     wishesRecipientName.innerText = `Dearest ${state.friendName},`;
     if (state.wishMessage) {
@@ -725,7 +728,7 @@
   }
 
   savePersonalizationBtn.addEventListener('click', () => {
-    const newName = inputFriendName.value.trim() || 'Pathu';
+    const newName = inputFriendName.value.trim() || 'ayshuuuuuuuuuu';
     const newMessage = inputWishMessage.value.trim();
 
     state.friendName = newName;

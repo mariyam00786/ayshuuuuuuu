@@ -1,5 +1,5 @@
 =======================================================
-HOW TO ADD YOUR IMAGES, VIDEO & MUSIC FOR PATHU
+HOW TO ADD YOUR IMAGES, VIDEO & MUSIC FOR AYSHUUUUUUUUUU
 =======================================================
 
 You can place your files directly in this "assets" folder or in the main folder!
